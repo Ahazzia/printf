@@ -1,51 +1,90 @@
-#include "main.h"
+#include "holberton.h"
+#include <stdarg.h>
+#include <stdlib.h>
 
 /**
- * ev_print_func - returns the amount of identifiers.
- * @s: argument indentifier
- * @index: index of argument identifier.
- * Return: amount of identifiers.
+ * print_nbr - print number
+ * @ap: arg list
+ * Return: number of printed char
  */
-int ev_print_func(const char *s, int index)
-{
-	print_t pr[] = {
-		{"c", print_chr}, {"s", print_str}, {"i", print_int},
-		{"d", print_int}, {"b", print_bnr}, {"u", print_unt},
-		{"o", print_oct}, {"x", print_hex}, {"X", print_upx},
-		{"S", print_usr}, {"p", print_add}, {"li", prinlint},
-		{"ld", prinlint}, {"lu", prinlunt}, {"lo", prinloct},
-		{"lx", prinlhex}, {"lX", prinlupx}, {"hi", prinhint},
-		{"hd", prinhint}, {"hu", prinhunt}, {"ho", prinhoct},
-		{"hx", prinhhex}, {"hX", prinhupx}, {"#o", prinnoct},
-		{"#x", prinnhex}, {"#X", prinnupx}, {"#i", print_int},
-		{"#d", print_int}, {"#u", print_unt}, {"+i", prinpint},
-		{"+d", prinpint}, {"+u", print_unt}, {"+o", print_oct},
-		{"+x", print_hex}, {"+X", print_upx}, {" i", prinsint},
-		{" d", prinsint}, {" u", print_unt}, {" o", print_oct},
-		{" x", print_hex}, {" X", print_upx}, {"R", print_rot},
-		{"r", print_rev}, {"%", print_prg}, {"l", print_prg},
-		{"h", print_prg}, {" +i", prinpint}, {" +d", prinpint},
-		{"+ i", prinpint}, {"+ d", prinpint}, {" %", print_prg},
-		{NULL, NULL},
-	};
-	int i = 0, j = 0, first_index;
 
-	first_index = index;
-	while (pr[i].type_arg)
+int print_nbr(va_list ap)
+{
+	return (print_number(va_arg(ap, int)));
+}
+
+/**
+ * print_binary - print number binary base
+ * @ap: arg list
+ * Return: number of printed char
+ */
+
+int print_binary(va_list ap)
+{
+	char *str;
+	int sum = 0;
+	unsigned int argument = va_arg(ap, unsigned int);
+
+	if (!argument)
 	{
-		if (s[index] == pr[i].type_arg[j])
-		{
-			if (pr[i].type_arg[j + 1] != '\0')
-				index++, j++;
-			else
-				break;
-		}
-		else
-		{
-			j = 0;
-			i++;
-			index = first_index;
-		}
+		sum += _puts("0", 0);
+		return (sum);
 	}
-	return (j);
+	str = convert_base(argument, 2, 0);
+	if (!str)
+		return (0);
+	sum = _puts(str, 0);
+	free(str);
+	return (sum);
+}
+
+/**
+ * print_octal - print number octal base
+ * @ap: arg list
+ * Return: number of printed char
+ */
+
+int print_octal(va_list ap)
+{
+	char *str;
+	int sum;
+
+	str = convert_base(va_arg(ap, unsigned int), 8, 0);
+	sum = _puts(str, 0);
+	free(str);
+	return (sum);
+}
+
+/**
+ * print_hexa_lower - print hexa lower
+ * @ap: arg list
+ * Return: number of printed char
+ */
+
+int print_hexa_lower(va_list ap)
+{
+	char *str;
+	int sum;
+
+	str = convert_base(va_arg(ap, unsigned int), 16, 0);
+	sum = _puts(str, 0);
+	free(str);
+	return (sum);
+}
+
+/**
+ * print_hexa_upper - print hexa upper
+ * @ap: arg list
+ * Return: number of printed char
+ */
+
+int print_hexa_upper(va_list ap)
+{
+	char *str;
+	int sum;
+
+	str = convert_base(va_arg(ap, unsigned int), 16, 1);
+	sum = _puts(str, 0);
+	free(str);
+	return (sum);
 }
