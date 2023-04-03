@@ -61,10 +61,10 @@ int print_non_printable(va_list types, char buffer[],
 int print_pointer(va_list types, char buffer[],
 	int flags_characters, int field_width, int precision, int length_modifiers);
 
-int get_flags_characters(const char *format, int *i);
-int get_field_width(const char *format, int *i, va_list list);
-int get_precision(const char *format, int *i, va_list list);
-int get_length_modifiers(const char *format, int *i);
+int flags_characters(const char *format, int *i);
+int field_width(const char *format, int *i, va_list list);
+int precision(const char *format, int *i, va_list list);
+int length_modifiers(const char *format, int *i);
 
 int print_reverse(va_list types, char buffer[],
 	int flags_characters, int field_width, int precision, int length_modifiers);
